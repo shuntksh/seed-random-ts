@@ -16,58 +16,58 @@
  *
  */
 export class SeedRandom {
-  private s0: number;
-  private s1: number;
-  private s2: number;
-  private c: number;
+	private s0: number;
+	private s1: number;
+	private s2: number;
+	private c: number;
 
-  constructor(seed: string | number) {
-    const mash = Mash();
-    this.s0 = mash(" ");
-    this.s1 = mash(" ");
-    this.s2 = mash(" ");
-    this.c = 1;
+	constructor(seed: string | number) {
+		const mash = Mash();
+		this.s0 = mash(" ");
+		this.s1 = mash(" ");
+		this.s2 = mash(" ");
+		this.c = 1;
 
-    const seedStr = seed.toString();
-    for (let i = 0; i < seedStr.length; i++) {
-      this.s0 -= mash(seedStr[i]!);
-      this.s1 -= mash(seedStr[i]!);
-      this.s2 -= mash(seedStr[i]!);
-      if (this.s0 < 0) this.s0 += 1;
-      if (this.s1 < 0) this.s1 += 1;
-      if (this.s2 < 0) this.s2 += 1;
-    }
-  }
+		const seedStr = seed.toString();
+		for (let i = 0; i < seedStr.length; i++) {
+			this.s0 -= mash(seedStr[i]);
+			this.s1 -= mash(seedStr[i]);
+			this.s2 -= mash(seedStr[i]);
+			if (this.s0 < 0) this.s0 += 1;
+			if (this.s1 < 0) this.s1 += 1;
+			if (this.s2 < 0) this.s2 += 1;
+		}
+	}
 
-  next(): number {
-    const t = 2091639 * this.s0 + this.c * 2.3283064365386963e-10; // 2^-32
-    this.c = t | 0;
-    this.s0 = this.s1;
-    this.s1 = this.s2;
-    this.s2 = t - this.c;
-    return this.s2;
-  }
+	next(): number {
+		const t = 2091639 * this.s0 + this.c * 2.3283064365386963e-10; // 2^-32
+		this.c = t | 0;
+		this.s0 = this.s1;
+		this.s1 = this.s2;
+		this.s2 = t - this.c;
+		return this.s2;
+	}
 }
 
 function Mash() {
-  let n = 0xefc8249d;
-  return function (data: string): number {
-    data = data.toString();
-    for (let i = 0; i < data.length; i++) {
-      n += data.charCodeAt(i);
-      let h = 0.02519603282416938 * n;
-      n = h >>> 0;
-      h -= n;
-      h *= n;
-      n = h >>> 0;
-      h -= n;
-      n += h * 0x100000000; // 2^32
-    }
-    return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
-  };
+	let n = 0xefc8249d;
+	return (data: string): number => {
+		const _data = data.toString();
+		for (let i = 0; i < data.length; i++) {
+			n += _data.charCodeAt(i);
+			let h = 0.02519603282416938 * n;
+			n = h >>> 0;
+			h -= n;
+			h *= n;
+			n = h >>> 0;
+			h -= n;
+			n += h * 0x100000000; // 2^32
+		}
+		return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
+	};
 }
 
 export function seedRandom(seed: string | number): () => number {
-  const rng = new SeedRandom(seed);
-  return () => rng.next();
+	const rng = new SeedRandom(seed);
+	return () => rng.next();
 }

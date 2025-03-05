@@ -1,34 +1,31 @@
-import { fc, test } from "@fast-check/vitest";
-import { describe, expect } from "vitest";
+import { fc, test } from "fast-check-bun-test";
+import { describe, expect } from "bun:test";
 
 import { seedRandom } from "./seed-random";
 
 describe("seedRandom", () => {
-  test.prop([fc.string()])(
-    "should always generate numbers within the range [0, 1]",
-    (seed) => {
-      const rng = seedRandom(seed);
-      for (let i = 0; i < 100; i++) {
-        const num = rng();
-        expect(num).toBeGreaterThanOrEqual(0);
-        expect(num).toBeLessThanOrEqual(1);
-      }
-    }
-  );
+	test.prop([fc.string()])("should always generate numbers within the range [0, 1]", (seed) => {
+		const rng = seedRandom(seed);
+		for (let i = 0; i < 100; i++) {
+			const num = rng();
+			expect(num).toBeGreaterThanOrEqual(0);
+			expect(num).toBeLessThanOrEqual(1);
+		}
+	});
 
-  test("should generate the same sequence for the same seed", () => {
-    const seed = "test-seed";
-    const rng1 = seedRandom(seed);
-    const rng2 = seedRandom(seed);
-    for (let i = 0; i < 100; i++) {
-      expect(rng1()).toEqual(rng2());
-    }
-  });
+	test("should generate the same sequence for the same seed", () => {
+		const seed = "test-seed";
+		const rng1 = seedRandom(seed);
+		const rng2 = seedRandom(seed);
+		for (let i = 0; i < 100; i++) {
+			expect(rng1()).toEqual(rng2());
+		}
+	});
 
-  test("should generate random numbers that is deterministic", () => {
-    const rng = seedRandom("My Seed");
-    const numbers = Array.from({ length: 100 }, () => rng());
-    expect(numbers).toMatchInlineSnapshot(`
+	test("should generate random numbers that is deterministic", () => {
+		const rng = seedRandom("My Seed");
+		const numbers = Array.from({ length: 100 }, () => rng());
+		expect(numbers).toMatchInlineSnapshot(`
           [
             0.12074459111317992,
             0.7390268826857209,
@@ -132,5 +129,5 @@ describe("seedRandom", () => {
             0.953715112991631,
           ]
         `);
-  });
+	});
 });
