@@ -43,7 +43,7 @@
 
     "fast-check": ["fast-check@3.23.2", "", { "dependencies": { "pure-rand": "^6.1.0" } }, "sha512-h5+1OzzfCC3Ef7VbtKdcv7zsstUQwUDlYpUTvjeUsJAssPgLn7QzbboPtL5ro04Mq0rPOsMzl7q5hIbRs2wD1A=="],
 
-    "fast-check-bun-test": ["fast-check-bun-test@0.0.5", "", { "peerDependencies": { "fast-check": "^3.0.0", "typescript": "^5" } }, "sha512-nfHIYNtjSDqdjV5MNDCz9lmV3fTAnaKR0grAnEgiUR4womYgNmlnp0hMs/r3TLSVieAeyoNTiDDazXlt+F/CiA=="],
+    "fast-check-bun-test": ["fast-check-bun-test@0.1.0", "", { "peerDependencies": { "fast-check": "3.23.2", "typescript": "5.8.2" } }, "sha512-ew+L1RCmEsE+YkXfpyNM/ZcBs2FGwUltxP9kK3VEJp/d3z7zfS4Au+tNO1pItdOI4qfwVd74culV+zyWHgoZkg=="],
 
     "pure-rand": ["pure-rand@6.1.0", "", {}, "sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA=="],
 
