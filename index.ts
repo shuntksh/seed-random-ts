@@ -33,6 +33,7 @@ if (import.meta.main) {
 		switch (arg) {
 			case "--help":
 			case "-h":
+			// biome-ignore lint/suspicious/noFallthroughSwitchClause: false positive
 			case "-H":
 				console.log(usage);
 				process.exit(0);

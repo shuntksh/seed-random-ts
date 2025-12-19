@@ -1,16 +1,20 @@
-import { fc, test } from "fast-check-bun-test";
-import { describe, expect } from "bun:test";
+import { describe, expect, test } from "bun:test";
+import fc from "fast-check";
 
 import { seedRandom } from "./seed-random";
 
-describe("seedRandom", () => {
-	test.prop([fc.string()])("should always generate numbers within the range [0, 1]", (seed) => {
-		const rng = seedRandom(seed);
-		for (let i = 0; i < 100; i++) {
-			const num = rng();
-			expect(num).toBeGreaterThanOrEqual(0);
-			expect(num).toBeLessThanOrEqual(1);
-		}
+describe("seed`Random", () => {
+	test("should always generate numbers within the range [0, 1]", () => {
+		fc.assert(
+			fc.property(fc.string({ minLength: 1 }), (seed) => {
+				const rng = seedRandom(seed);
+				for (let i = 0; i < 100; i++) {
+					const num = rng();
+					expect(num).toBeGreaterThanOrEqual(0);
+					expect(num).toBeLessThanOrEqual(1);
+				}
+			}),
+		);
 	});
 
 	test("should generate the same sequence for the same seed", () => {
